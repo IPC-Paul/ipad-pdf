@@ -13,6 +13,9 @@
 		DA04D4741D088D85002EF2B4 /* PDF_Annotation.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DA04D4721D088D85002EF2B4 /* PDF_Annotation.xcdatamodeld */; };
 		DA04D4761D088D85002EF2B4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA04D4751D088D85002EF2B4 /* Assets.xcassets */; };
 		DA04D4791D088D85002EF2B4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA04D4771D088D85002EF2B4 /* LaunchScreen.storyboard */; };
+		DA04D4821D08AFD7002EF2B4 /* 10002.pdf in Resources */ = {isa = PBXBuildFile; fileRef = DA04D4801D08AFD7002EF2B4 /* 10002.pdf */; };
+		DA04D4831D08AFD7002EF2B4 /* 10000.pdf in Resources */ = {isa = PBXBuildFile; fileRef = DA04D4811D08AFD7002EF2B4 /* 10000.pdf */; };
+		DA04D48B1D08C996002EF2B4 /* InnerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA04D48A1D08C996002EF2B4 /* InnerView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +27,9 @@
 		DA04D4751D088D85002EF2B4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DA04D4781D088D85002EF2B4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DA04D47A1D088D85002EF2B4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DA04D4801D08AFD7002EF2B4 /* 10002.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = 10002.pdf; path = "PDF-Annotation/10002.pdf"; sourceTree = SOURCE_ROOT; };
+		DA04D4811D08AFD7002EF2B4 /* 10000.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = 10000.pdf; sourceTree = "<group>"; };
+		DA04D48A1D08C996002EF2B4 /* InnerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InnerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,15 +62,50 @@
 		DA04D46A1D088D85002EF2B4 /* PDF-Annotation */ = {
 			isa = PBXGroup;
 			children = (
+				DA04D4841D08AFE7002EF2B4 /* PDFs */,
+				DA04D4861D08B023002EF2B4 /* Storyboards */,
+				DA04D4851D08B014002EF2B4 /* Swift Files */,
+				DA04D4871D08B02D002EF2B4 /* XCode Elements */,
+			);
+			path = "PDF-Annotation";
+			sourceTree = "<group>";
+		};
+		DA04D4841D08AFE7002EF2B4 /* PDFs */ = {
+			isa = PBXGroup;
+			children = (
+				DA04D4801D08AFD7002EF2B4 /* 10002.pdf */,
+				DA04D4811D08AFD7002EF2B4 /* 10000.pdf */,
+			);
+			name = PDFs;
+			sourceTree = "<group>";
+		};
+		DA04D4851D08B014002EF2B4 /* Swift Files */ = {
+			isa = PBXGroup;
+			children = (
 				DA04D46B1D088D85002EF2B4 /* AppDelegate.swift */,
 				DA04D46D1D088D85002EF2B4 /* ViewController.swift */,
+				DA04D48A1D08C996002EF2B4 /* InnerView.swift */,
+			);
+			name = "Swift Files";
+			sourceTree = "<group>";
+		};
+		DA04D4861D08B023002EF2B4 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
 				DA04D46F1D088D85002EF2B4 /* Main.storyboard */,
-				DA04D4751D088D85002EF2B4 /* Assets.xcassets */,
 				DA04D4771D088D85002EF2B4 /* LaunchScreen.storyboard */,
+			);
+			name = Storyboards;
+			sourceTree = "<group>";
+		};
+		DA04D4871D08B02D002EF2B4 /* XCode Elements */ = {
+			isa = PBXGroup;
+			children = (
+				DA04D4751D088D85002EF2B4 /* Assets.xcassets */,
 				DA04D47A1D088D85002EF2B4 /* Info.plist */,
 				DA04D4721D088D85002EF2B4 /* PDF_Annotation.xcdatamodeld */,
 			);
-			path = "PDF-Annotation";
+			name = "XCode Elements";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -125,8 +166,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA04D4821D08AFD7002EF2B4 /* 10002.pdf in Resources */,
 				DA04D4791D088D85002EF2B4 /* LaunchScreen.storyboard in Resources */,
 				DA04D4761D088D85002EF2B4 /* Assets.xcassets in Resources */,
+				DA04D4831D08AFD7002EF2B4 /* 10000.pdf in Resources */,
 				DA04D4711D088D85002EF2B4 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -139,6 +182,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA04D46E1D088D85002EF2B4 /* ViewController.swift in Sources */,
+				DA04D48B1D08C996002EF2B4 /* InnerView.swift in Sources */,
 				DA04D4741D088D85002EF2B4 /* PDF_Annotation.xcdatamodeld in Sources */,
 				DA04D46C1D088D85002EF2B4 /* AppDelegate.swift in Sources */,
 			);
