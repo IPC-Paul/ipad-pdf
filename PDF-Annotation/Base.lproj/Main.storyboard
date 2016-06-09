@@ -17,22 +17,29 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uFo-nh-ES0" customClass="InnerView" customModule="PDF_Annotation" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="20" width="768" height="1004"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
+                            <imageView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2Bj-xK-a8b">
+                                <rect key="frame" x="0.0" y="32" width="768" height="960"/>
+                            </imageView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CT0-36-3hA">
+                                <rect key="frame" x="0.0" y="980" width="768" height="44"/>
+                                <items>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="LMD-xb-Hs4"/>
+                                    <barButtonItem title="Menu" id="0cm-0h-hff"/>
+                                </items>
+                            </toolbar>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="uFo-nh-ES0" secondAttribute="trailing" id="23v-jm-3ad"/>
-                            <constraint firstItem="uFo-nh-ES0" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="TUY-pK-ArJ"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="uFo-nh-ES0" secondAttribute="bottom" id="jHL-lX-R7m"/>
-                            <constraint firstItem="uFo-nh-ES0" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="l1b-8s-Ct1"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="CT0-36-3hA" secondAttribute="bottom" id="fb4-uZ-wnH"/>
+                            <constraint firstAttribute="trailing" secondItem="CT0-36-3hA" secondAttribute="trailing" id="ftG-2d-eOb"/>
+                            <constraint firstItem="CT0-36-3hA" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="jn0-5E-dOh"/>
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="iPad"/>
                     <connections>
-                        <outlet property="docView" destination="uFo-nh-ES0" id="Szi-6u-Vuo"/>
+                        <outlet property="imageBox" destination="2Bj-xK-a8b" id="WoU-KK-DsX"/>
+                        <outlet property="innerView" destination="8bC-Xf-vdC" id="VSP-32-A6b"/>
+                        <outlet property="menuButton" destination="0cm-0h-hff" id="QFR-hR-HFb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

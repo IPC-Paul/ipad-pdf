@@ -7,18 +7,38 @@
 //
 
 import UIKit
+import CoreGraphics
 
 var fileArray : [String] = []
 var docNameArray : [String] = []
+var innerURL : NSURL = NSURL(fileURLWithPath: "")
 
-class ViewController: UIViewController, NSXMLParserDelegate {
+var currentDoc : String = ""
+var currentPage : Int = 0
+
+class ViewController: UIViewController {
 	
-	@IBOutlet var docView: InnerView!
+	@IBOutlet var innerView: UIView!
+	@IBOutlet var menuButton: UIBarButtonItem!
+	@IBOutlet var imageBox: UIImageView!
 	
 	let fileManager = NSFileManager.defaultManager()
 	var error: NSError?
 	
 	override func viewDidLoad() {
+		
+		super.viewDidLoad()
+		// Do any additional setup after loading the view, typically from a nib.
+		
+		LoadPDFList()
+		
+		currentDoc = docNameArray[0]
+		
+		//context = UIGraphicsGetCurrentContext()
+		LoadPDF()
+	}
+	
+	func LoadPDFList() {
 		
 		do {
 			fileArray = try fileManager.contentsOfDirectoryAtPath(NSBundle.mainBundle().resourcePath!)
@@ -34,19 +54,70 @@ class ViewController: UIViewController, NSXMLParserDelegate {
 				}
 			}
 		}
-		
-		docView.LoadPDF(0)
-		
-		print(docNameArray)
-		
-		super.viewDidLoad()
-		
-		// Do any additional setup after loading the view, typically from a nib.
 	}
 
 	override func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()
 		// Dispose of any resources that can be recreated.
+	}
+	
+	var context = UIGraphicsGetCurrentContext()
+	var pageCount : Int = 0
+	var currentPage = 1
+	var pdf : CGPDFDocument?
+	
+	func LoadPDF () {
+		
+		context = UIGraphicsGetCurrentContext()
+		
+		innerURL = NSBundle.mainBundle().URLForResource(currentDoc, withExtension: "pdf")!
+		pdf = CGPDFDocumentCreateWithURL(innerURL)!
+		pageCount = CGPDFDocumentGetNumberOfPages(pdf)
+		currentPage = 1
+		
+		LoadPage()
+	}
+	
+	func ChangePage (newPage : Int) {
+		currentPage = newPage
+		LoadPage()
+	}
+	
+	var thisFrame : CGRect = CGRectMake(0, 0, 0, 0)
+	
+	func LoadPage () {
+		
+		let thisPage : CGPDFPageRef = CGPDFDocumentGetPage(pdf, currentPage)!
+		
+		CGContextDrawPDFPage(context, thisPage)
+		
+		thisFrame = CGPDFPageGetBoxRect(thisPage, .MediaBox)
+		UIGraphicsBeginImageContext(CGSizeMake( thisFrame.width, thisFrame.height )) //innerView.frame.size.width, innerView.frame.size.height))
+		
+		var ctx: CGContextRef = UIGraphicsGetCurrentContext()!
+		
+		CGContextSaveGState(ctx)
+		CGContextTranslateCTM(ctx, 0.0, thisFrame.height)
+		CGContextScaleCTM(ctx, 1.0, -1.0)
+		CGContextSetGrayFillColor(ctx, 1.0, 1.0)
+		CGContextFillRect(ctx, thisFrame)
+		
+		var pdfTransform: CGAffineTransform = CGPDFPageGetDrawingTransform(thisPage, .MediaBox, thisFrame, 0, true)
+		CGContextConcatCTM(ctx, pdfTransform);
+		CGContextSetInterpolationQuality(ctx, .High)
+		CGContextSetRenderingIntent(ctx, .RenderingIntentDefault)
+		CGContextDrawPDFPage(ctx, thisPage)
+		
+		var thumbnailImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()
+		CGContextRestoreGState(ctx)
+		// var documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).last!
+		UIGraphicsEndImageContext()
+		
+		var imagedata = UIImagePNGRepresentation(thumbnailImage)
+		// imagedata!.writeToFile(documentsPath, atomically: true)
+		
+		imageBox.image = thumbnailImage
+		
 	}
 	
 }
