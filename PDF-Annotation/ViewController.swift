@@ -33,8 +33,7 @@ class ViewController: UIViewController {
 		LoadPDFList()
 		
 		currentDoc = docNameArray[0]
-		
-		//context = UIGraphicsGetCurrentContext()
+        
 		LoadPDF()
 	}
 	
@@ -47,7 +46,7 @@ class ViewController: UIViewController {
 		}
 		
 		for i in 0 ..< fileArray.count {
-			var fileName = fileArray[i].componentsSeparatedByString(".")
+            var fileName = fileArray[i].componentsSeparatedByString(".")
 			if fileName.count > 1 {
 				if fileName[1] == "pdf" {
 					docNameArray.append(fileName[0])
@@ -60,15 +59,12 @@ class ViewController: UIViewController {
 		super.didReceiveMemoryWarning()
 		// Dispose of any resources that can be recreated.
 	}
-	
-	var context = UIGraphicsGetCurrentContext()
+    
 	var pageCount : Int = 0
 	var currentPage = 1
 	var pdf : CGPDFDocument?
 	
 	func LoadPDF () {
-		
-		context = UIGraphicsGetCurrentContext()
 		
 		innerURL = NSBundle.mainBundle().URLForResource(currentDoc, withExtension: "pdf")!
 		pdf = CGPDFDocumentCreateWithURL(innerURL)!
@@ -89,31 +85,31 @@ class ViewController: UIViewController {
 		
 		let thisPage : CGPDFPageRef = CGPDFDocumentGetPage(pdf, currentPage)!
 		
-		CGContextDrawPDFPage(context, thisPage)
+        // CGContextDrawPDFPage(context, thisPage)
 		
 		thisFrame = CGPDFPageGetBoxRect(thisPage, .MediaBox)
-		UIGraphicsBeginImageContext(CGSizeMake( thisFrame.width, thisFrame.height )) //innerView.frame.size.width, innerView.frame.size.height))
+		UIGraphicsBeginImageContext(CGSizeMake( thisFrame.width, thisFrame.height ))
 		
-		var ctx: CGContextRef = UIGraphicsGetCurrentContext()!
+		let ctx: CGContextRef = UIGraphicsGetCurrentContext()!
 		
 		CGContextSaveGState(ctx)
-		CGContextTranslateCTM(ctx, 0.0, thisFrame.height)
+		CGContextTranslateCTM(ctx, 1.0, thisFrame.height)
 		CGContextScaleCTM(ctx, 1.0, -1.0)
 		CGContextSetGrayFillColor(ctx, 1.0, 1.0)
 		CGContextFillRect(ctx, thisFrame)
 		
-		var pdfTransform: CGAffineTransform = CGPDFPageGetDrawingTransform(thisPage, .MediaBox, thisFrame, 0, true)
+		let pdfTransform: CGAffineTransform = CGPDFPageGetDrawingTransform(thisPage, .MediaBox, thisFrame, 0, true)
 		CGContextConcatCTM(ctx, pdfTransform);
 		CGContextSetInterpolationQuality(ctx, .High)
 		CGContextSetRenderingIntent(ctx, .RenderingIntentDefault)
 		CGContextDrawPDFPage(ctx, thisPage)
 		
-		var thumbnailImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()
+		let thumbnailImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()
 		CGContextRestoreGState(ctx)
 		// var documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).last!
 		UIGraphicsEndImageContext()
 		
-		var imagedata = UIImagePNGRepresentation(thumbnailImage)
+        // let imagedata = UIImagePNGRepresentation(thumbnailImage)
 		// imagedata!.writeToFile(documentsPath, atomically: true)
 		
 		imageBox.image = thumbnailImage
