@@ -15,6 +15,8 @@
 		DA04D4791D088D85002EF2B4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA04D4771D088D85002EF2B4 /* LaunchScreen.storyboard */; };
 		DA04D4821D08AFD7002EF2B4 /* 10002.pdf in Resources */ = {isa = PBXBuildFile; fileRef = DA04D4801D08AFD7002EF2B4 /* 10002.pdf */; };
 		DA04D4831D08AFD7002EF2B4 /* 10000.pdf in Resources */ = {isa = PBXBuildFile; fileRef = DA04D4811D08AFD7002EF2B4 /* 10000.pdf */; };
+		DA97A0BC1D0B0CDF00697717 /* DrawView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA97A0BB1D0B0CDF00697717 /* DrawView.swift */; };
+		DA97A0BE1D0B366D00697717 /* BrushController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA97A0BD1D0B366D00697717 /* BrushController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +30,8 @@
 		DA04D47A1D088D85002EF2B4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DA04D4801D08AFD7002EF2B4 /* 10002.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = 10002.pdf; path = "PDF-Annotation/10002.pdf"; sourceTree = SOURCE_ROOT; };
 		DA04D4811D08AFD7002EF2B4 /* 10000.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = 10000.pdf; sourceTree = "<group>"; };
+		DA97A0BB1D0B0CDF00697717 /* DrawView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawView.swift; sourceTree = "<group>"; };
+		DA97A0BD1D0B366D00697717 /* BrushController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrushController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +86,8 @@
 			children = (
 				DA04D46B1D088D85002EF2B4 /* AppDelegate.swift */,
 				DA04D46D1D088D85002EF2B4 /* ViewController.swift */,
+				DA97A0BD1D0B366D00697717 /* BrushController.swift */,
+				DA97A0BB1D0B0CDF00697717 /* DrawView.swift */,
 			);
 			name = "Swift Files";
 			sourceTree = "<group>";
@@ -180,6 +186,8 @@
 			files = (
 				DA04D46E1D088D85002EF2B4 /* ViewController.swift in Sources */,
 				DA04D4741D088D85002EF2B4 /* PDF_Annotation.xcdatamodeld in Sources */,
+				DA97A0BC1D0B0CDF00697717 /* DrawView.swift in Sources */,
+				DA97A0BE1D0B366D00697717 /* BrushController.swift in Sources */,
 				DA04D46C1D088D85002EF2B4 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
