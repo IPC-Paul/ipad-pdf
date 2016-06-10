@@ -9,6 +9,10 @@
 import UIKit
 import CoreGraphics
 
+let usingWebView = true
+
+var scrollPDF = true
+
 var docNameArray : [String] = []
 var fileArray : [String] = []
 var previewArray : [UIImage] = []
@@ -20,10 +24,12 @@ var currentPage : Int = 0
 
 class ViewController: UIViewController {
 	
-	@IBOutlet var drawView: DrawView!
-	@IBOutlet var drawSlave: UIImageView!
+	@IBOutlet weak var pdfWebView: UIWebView!
 	
-	@IBOutlet var menuButton: UIBarButtonItem!
+	@IBOutlet weak var drawView: DrawView!
+	@IBOutlet weak var drawSlave: UIImageView!
+	@IBOutlet weak var pdfControlButton: UIBarButtonItem!
+	
 	@IBOutlet var imageBox: UIImageView!
 	
 	var pageCount : Int = 0
@@ -43,10 +49,12 @@ class ViewController: UIViewController {
 		drawView.pdfBox = imageBox
 		drawView.drawSlave = drawSlave
 		
+		
+		
 		LoadPDFList()
 		
 		currentDoc = docNameArray[0]
-        
+		
 		LoadPDF()
 	}
 	
@@ -75,7 +83,34 @@ class ViewController: UIViewController {
 		pageCount = CGPDFDocumentGetNumberOfPages(pdf)
 		currentPage = 1
 		
-		LoadPages()
+		if !usingWebView {
+			LoadPages()
+		} else {
+			LoadPDFView(innerURL)
+		}
+	}
+	
+	@IBAction func ManagePDFControl(sender: AnyObject) {
+		
+		if scrollPDF {
+			
+			scrollPDF = false
+			pdfControlButton.title = "Scroll PDF"
+			drawView.userInteractionEnabled = true
+			
+		} else {
+			
+			scrollPDF = true
+			drawView.image = UIImage()
+			pdfControlButton.title = "Annotate PDF"
+			drawView.userInteractionEnabled = false
+			
+		}
+		
+	}
+	
+	func LoadPDFView(pdfURL : NSURL) {
+		pdfWebView.loadRequest(NSURLRequest(URL: pdfURL))
 	}
 	
 	func LoadPages () {

@@ -58,9 +58,9 @@ class DrawView: UIImageView {
 	func DrawLineFrom( fromPoint : CGPoint, toPoint : CGPoint) {
 		
 		// grab initial variables and set destination box for initial line
-		UIGraphicsBeginImageContext(pdfBox!.frame.size)
+		UIGraphicsBeginImageContext( (window?.frame.size)! )
 		let context = UIGraphicsGetCurrentContext()
-		drawSlave!.image?.drawInRect(CGRect(x: 0, y: 0, width: pdfBox!.frame.size.width, height: pdfBox!.frame.size.height))
+		drawSlave!.image?.drawInRect(CGRect(x: 0, y: 0, width: (window?.frame.size.width)!, height: (window?.frame.size.height)!))
 		
 		// line building
 		CGContextMoveToPoint(context, fromPoint.x, fromPoint.y)
@@ -70,7 +70,7 @@ class DrawView: UIImageView {
 		CGContextSetLineCap(context, .Round)
 		CGContextSetLineWidth(context, CGFloat(brushWidth))
 		CGContextSetRGBStrokeColor(context, red, green, blue, brushOpacity)
-		CGContextSetBlendMode(context, .Color)
+		CGContextSetBlendMode(context, .Saturation)
 		
 		// draw path
 		CGContextStrokePath(context)
