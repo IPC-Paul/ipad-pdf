@@ -15,7 +15,6 @@
 		DA04D4791D088D85002EF2B4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA04D4771D088D85002EF2B4 /* LaunchScreen.storyboard */; };
 		DA04D4821D08AFD7002EF2B4 /* 10002.pdf in Resources */ = {isa = PBXBuildFile; fileRef = DA04D4801D08AFD7002EF2B4 /* 10002.pdf */; };
 		DA04D4831D08AFD7002EF2B4 /* 10000.pdf in Resources */ = {isa = PBXBuildFile; fileRef = DA04D4811D08AFD7002EF2B4 /* 10000.pdf */; };
-		DA04D48B1D08C996002EF2B4 /* InnerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA04D48A1D08C996002EF2B4 /* InnerView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,7 +28,6 @@
 		DA04D47A1D088D85002EF2B4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DA04D4801D08AFD7002EF2B4 /* 10002.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = 10002.pdf; path = "PDF-Annotation/10002.pdf"; sourceTree = SOURCE_ROOT; };
 		DA04D4811D08AFD7002EF2B4 /* 10000.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = 10000.pdf; sourceTree = "<group>"; };
-		DA04D48A1D08C996002EF2B4 /* InnerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InnerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,7 +82,6 @@
 			children = (
 				DA04D46B1D088D85002EF2B4 /* AppDelegate.swift */,
 				DA04D46D1D088D85002EF2B4 /* ViewController.swift */,
-				DA04D48A1D08C996002EF2B4 /* InnerView.swift */,
 			);
 			name = "Swift Files";
 			sourceTree = "<group>";
@@ -182,7 +179,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA04D46E1D088D85002EF2B4 /* ViewController.swift in Sources */,
-				DA04D48B1D08C996002EF2B4 /* InnerView.swift in Sources */,
 				DA04D4741D088D85002EF2B4 /* PDF_Annotation.xcdatamodeld in Sources */,
 				DA04D46C1D088D85002EF2B4 /* AppDelegate.swift in Sources */,
 			);
@@ -336,6 +332,7 @@
 				DA04D47F1D088D85002EF2B4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
