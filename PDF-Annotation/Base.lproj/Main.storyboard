@@ -253,6 +253,12 @@
                                             </segue>
                                         </connections>
                                     </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="2t3-Xv-TsP"/>
+                                    <barButtonItem title="Clear" id="2Ia-d4-0HV">
+                                        <connections>
+                                            <action selector="ClearDrawing:" destination="BYZ-38-t0r" id="xK7-J8-cXg"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="LMD-xb-Hs4"/>
                                     <barButtonItem title="Document" id="0cm-0h-hff"/>
                                 </items>

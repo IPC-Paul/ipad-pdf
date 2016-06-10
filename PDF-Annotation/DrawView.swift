@@ -39,9 +39,16 @@ class DrawView: UIImageView {
 	
 	var isStroke : Bool = false
 	
+	var undoHistory : [Int : [(CGPoint, CGPoint)]] = [0:[(CGPoint(),CGPoint())]]
+	var currentIteration : Int = 0
+	
 	
 	override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
 		isStroke = false
+		
+		currentIteration = undoHistory.count
+		
+		undoHistory[currentIteration] = [(CGPoint(),CGPoint())]
 		
 		if let touch = touches.first {
 			lastPoint = touch.locationInView(self)
@@ -60,10 +67,10 @@ class DrawView: UIImageView {
 		CGContextAddLineToPoint(context, toPoint.x, toPoint.y)
 		
 		// brush size/opacity/color
-		CGContextSetLineCap(context, .Square)
+		CGContextSetLineCap(context, .Round)
 		CGContextSetLineWidth(context, CGFloat(brushWidth))
 		CGContextSetRGBStrokeColor(context, red, green, blue, brushOpacity)
-		CGContextSetBlendMode(context, .Normal)
+		CGContextSetBlendMode(context, .Color)
 		
 		// draw path
 		CGContextStrokePath(context)
@@ -82,11 +89,14 @@ class DrawView: UIImageView {
 	
 	override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
 		
+		
 		isStroke = true
 		
 		if let touch = touches.first {
 			
 			let currentPoint = touch.locationInView(self)
+			
+			undoHistory[currentIteration]?.append((lastPoint,currentPoint))
 			
 			DrawLineFrom(lastPoint, toPoint: currentPoint)
 			
@@ -100,14 +110,8 @@ class DrawView: UIImageView {
 			DrawLineFrom(lastPoint, toPoint: lastPoint)
 		}
 		
+		UpdateImage()
 		
-		// merge images and reset slave
-		UIGraphicsBeginImageContext(self.frame.size)
-		self.image?.drawInRect(CGRect(x: 0, y: 0, width: self.frame.size.width, height: self.frame.size.height), blendMode: .Normal, alpha: 1.0)
-		drawSlave?.image?.drawInRect(CGRect(x: 0, y: 0, width: self.frame.size.width, height: self.frame.size.height), blendMode: .Normal, alpha: brushOpacity)
-		self.image = UIGraphicsGetImageFromCurrentImageContext()
-		UIGraphicsEndImageContext()
-			
 		drawSlave?.image = nil
 		
 	}
@@ -116,7 +120,30 @@ class DrawView: UIImageView {
 		self.image = newImage
 	}
 	
-}
+	
+	func UpdateImage() {
+		
+		/*
+		self.image = UIImage()
+		
+		
+		for i in 0 ..< undoHistory.count {
+			for h in 0 ..< undoHistory[i]!.count {
+				DrawLineFrom(undoHistory[i]
+			}
+		*/
+			
+			// merge images and reset slave
+			UIGraphicsBeginImageContext(self.frame.size)
+			self.image?.drawInRect(CGRect(x: 0, y: 0, width: self.frame.size.width, height: self.frame.size.height), blendMode: .Normal, alpha: 1.0)
+			drawSlave?.image?.drawInRect(CGRect(x: 0, y: 0, width: self.frame.size.width, height: self.frame.size.height), blendMode: .Normal, alpha: 1.0)
+			self.image = UIGraphicsGetImageFromCurrentImageContext()
+			UIGraphicsEndImageContext()
+			
+		}
+	}
+	
+
 
 func ChangeDefinedColor(color : String) {
 	

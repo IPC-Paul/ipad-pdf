@@ -128,6 +128,10 @@ class ViewController: UIViewController {
 		drawView.PageChanged(annotationArray[newPage]!)
 	}
 	
+	@IBAction func ClearDrawing(sender: AnyObject) {
+		drawView.PageChanged( UIImage() )
+	}
+	
 	override func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()
 		// Dispose of any resources that can be recreated.
