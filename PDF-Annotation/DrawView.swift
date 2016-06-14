@@ -17,6 +17,9 @@ var blue : CGFloat = 0.0
 var brushWidth : Int = 10
 var brushOpacity : CGFloat = 1.0
 
+var drawingLine = false
+var shapeLayer : CAShapeLayer = CAShapeLayer()
+
 var erasing = false
 
 let colors : [String : (CGFloat, CGFloat, CGFloat)] = [
@@ -35,7 +38,9 @@ class DrawView: UIImageView {
 	var pdfBox : UIImageView? // used to verify size constraints
 	var drawSlave : UIImageView? // allows for transparency layer blending
 	
+	var startPoint : CGPoint = CGPointZero
 	var lastPoint : CGPoint = CGPointZero
+	var endPoint : CGPoint = CGPointZero
 	
 	var isStroke : Bool = false
 	
@@ -44,6 +49,10 @@ class DrawView: UIImageView {
 	
 	
 	override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+		if !drawingLine {
+			startPoint = (touches.first?.locationInView(self))!
+		}
+		
 		isStroke = false
 		
 		currentIteration = undoHistory.count
@@ -87,6 +96,31 @@ class DrawView: UIImageView {
 		
 	}
 	
+	func DrawShapeIn( toPoint : CGPoint) {
+		
+		shapeLayer = CAShapeLayer()
+		
+		let thisWidth = toPoint.x - startPoint.x
+		let thisHeight = toPoint.y - startPoint.y
+		
+		var beginPoint = startPoint
+		
+		if thisWidth < 0 && thisHeight < 0 {
+			beginPoint = toPoint
+		} else if thisHeight < 0 {
+			beginPoint.y = startPoint.y + thisHeight
+		} else if thisWidth < 0 {
+			beginPoint.x = startPoint.x + thisWidth
+		}
+		
+		shapeLayer.path = UIBezierPath(roundedRect: CGRect(x: beginPoint.x, y: beginPoint.y, width: abs(thisWidth), height: abs(thisHeight)), cornerRadius:  50).CGPath
+		
+		shapeLayer.fillColor = UIColor(colorLiteralRed: Float(red), green: Float(green), blue: Float(blue), alpha: Float(brushOpacity)).CGColor
+		
+		drawSlave?.layer.sublayers = [shapeLayer]
+		
+	}
+	
 	override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
 		
 		
@@ -98,8 +132,11 @@ class DrawView: UIImageView {
 			
 			undoHistory[currentIteration]?.append((lastPoint,currentPoint))
 			
-			DrawLineFrom(lastPoint, toPoint: currentPoint)
-			
+			if drawingLine {
+				DrawLineFrom(lastPoint, toPoint: currentPoint)
+			} else {
+				DrawShapeIn(currentPoint)
+			}
 			lastPoint = currentPoint
 		}
 	}
@@ -110,13 +147,21 @@ class DrawView: UIImageView {
 			DrawLineFrom(lastPoint, toPoint: lastPoint)
 		}
 		
+		if !drawingLine {
+			layer.addSublayer(shapeLayer)
+		}
+		
 		UpdateImage()
 		
 		drawSlave?.image = nil
+		drawSlave?.layer.sublayers = []
 		
 	}
 	
 	func PageChanged(newImage : UIImage) {
+		layer.sublayers?.removeAll()
+		drawSlave?.layer.sublayers?.removeAll()
+		
 		self.image = newImage
 	}
 	
@@ -134,13 +179,15 @@ class DrawView: UIImageView {
 		*/
 			
 			// merge images and reset slave
+		
 			UIGraphicsBeginImageContext(self.frame.size)
 			self.image?.drawInRect(CGRect(x: 0, y: 0, width: self.frame.size.width, height: self.frame.size.height), blendMode: .Normal, alpha: 1.0)
 			drawSlave?.image?.drawInRect(CGRect(x: 0, y: 0, width: self.frame.size.width, height: self.frame.size.height), blendMode: .Normal, alpha: 1.0)
 			self.image = UIGraphicsGetImageFromCurrentImageContext()
 			UIGraphicsEndImageContext()
-			
+		
 		}
+	
 	}
 	
 

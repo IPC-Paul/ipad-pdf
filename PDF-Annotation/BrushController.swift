@@ -25,7 +25,7 @@ class BrushController: UIViewController {
 		sizeLabel.text = String(brushWidth) + " px"
 		opacityLabel.text = String(Int(brushOpacity * 100)) + "%"
 		
-		self.preferredContentSize = CGSize(width: 250,height: 300)
+		self.preferredContentSize = CGSize(width: 250,height: 400)
 	}
 	
 	@IBAction func SizeChange(sender: AnyObject) {

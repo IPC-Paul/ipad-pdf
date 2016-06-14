@@ -16,7 +16,7 @@
                         <viewControllerLayoutGuide type="bottom" id="BjH-yI-UmM"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="3Di-eQ-IFF">
-                        <rect key="frame" x="0.0" y="0.0" width="250" height="300"/>
+                        <rect key="frame" x="0.0" y="0.0" width="250" height="350"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9ED-01-bee">
@@ -128,29 +128,29 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Tek-kW-800">
-                                <rect key="frame" x="18" y="250" width="214" height="31"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Brush Opacity" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SxB-yd-Kt4">
+                                <rect key="frame" x="20" y="206" width="109" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="100%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ps6-xO-2PX">
+                                <rect key="frame" x="188" y="206" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <slider opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Tek-kW-800">
+                                <rect key="frame" x="18" y="218" width="214" height="76"/>
                                 <connections>
                                     <action selector="OpacityChange:" destination="hDh-GC-9gk" eventType="valueChanged" id="x2R-rx-Q0A"/>
                                 </connections>
                             </slider>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Brush Opacity" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SxB-yd-Kt4">
-                                <rect key="frame" x="20" y="220" width="109" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ps6-xO-2PX">
-                                <rect key="frame" x="188" y="220" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="jZt-Mz-aeS" firstAttribute="height" secondItem="9ED-01-bee" secondAttribute="height" id="0Pv-tk-FoX"/>
-                            <constraint firstItem="Tek-kW-800" firstAttribute="top" secondItem="SxB-yd-Kt4" secondAttribute="bottom" constant="9" id="0Z5-0O-xVZ"/>
+                            <constraint firstItem="Tek-kW-800" firstAttribute="top" secondItem="SxB-yd-Kt4" secondAttribute="bottom" constant="8" id="0Z5-0O-xVZ"/>
                             <constraint firstItem="vys-QP-Pr5" firstAttribute="leading" secondItem="fF2-kX-QLx" secondAttribute="trailing" constant="8" id="2Ra-ti-hqP"/>
                             <constraint firstItem="SxB-yd-Kt4" firstAttribute="leading" secondItem="3Di-eQ-IFF" secondAttribute="leading" constant="20" id="2eF-cO-3TR"/>
                             <constraint firstItem="Rwa-ii-07d" firstAttribute="width" secondItem="9ED-01-bee" secondAttribute="width" id="7Wd-h2-Vz8"/>
@@ -166,11 +166,10 @@
                             <constraint firstAttribute="trailing" secondItem="Nyc-np-7QX" secondAttribute="trailing" constant="10" id="Srf-tG-ei4"/>
                             <constraint firstItem="Rwa-ii-07d" firstAttribute="height" secondItem="9ED-01-bee" secondAttribute="height" id="Twa-6V-OGP"/>
                             <constraint firstItem="Rwa-ii-07d" firstAttribute="top" secondItem="RRY-E0-cBu" secondAttribute="bottom" constant="10" id="XOU-R9-xp4"/>
-                            <constraint firstItem="BjH-yI-UmM" firstAttribute="top" secondItem="Tek-kW-800" secondAttribute="bottom" constant="20" id="XWC-Zk-S5e"/>
                             <constraint firstItem="RRY-E0-cBu" firstAttribute="leading" secondItem="9ED-01-bee" secondAttribute="trailing" constant="8" id="Xii-EI-gqJ"/>
                             <constraint firstItem="g0e-r0-yKB" firstAttribute="top" secondItem="Rwa-ii-07d" secondAttribute="bottom" constant="28" id="YE2-Rj-pts"/>
                             <constraint firstItem="efC-pU-4dN" firstAttribute="baseline" secondItem="g0e-r0-yKB" secondAttribute="firstBaseline" id="YK6-Aj-uhR"/>
-                            <constraint firstItem="Tek-kW-800" firstAttribute="top" secondItem="ps6-xO-2PX" secondAttribute="bottom" constant="9" id="ZCS-6M-FKq"/>
+                            <constraint firstItem="Tek-kW-800" firstAttribute="top" secondItem="ps6-xO-2PX" secondAttribute="bottom" constant="8" id="ZCS-6M-FKq"/>
                             <constraint firstItem="iq1-yn-qzo" firstAttribute="top" secondItem="efC-pU-4dN" secondAttribute="bottom" constant="8" id="aPr-bH-0z2"/>
                             <constraint firstAttribute="trailing" secondItem="ps6-xO-2PX" secondAttribute="trailing" constant="20" id="ac5-gQ-mxJ"/>
                             <constraint firstItem="vys-QP-Pr5" firstAttribute="width" secondItem="9ED-01-bee" secondAttribute="width" id="awI-3E-8uK"/>
@@ -194,13 +193,14 @@
                             <constraint firstItem="fF2-kX-QLx" firstAttribute="width" secondItem="9ED-01-bee" secondAttribute="width" id="pep-jq-3el"/>
                             <constraint firstItem="Nyc-np-7QX" firstAttribute="width" secondItem="9ED-01-bee" secondAttribute="width" id="rCp-fw-Oz4"/>
                             <constraint firstAttribute="trailing" secondItem="vys-QP-Pr5" secondAttribute="trailing" constant="10" id="ry3-kt-IkV"/>
+                            <constraint firstItem="Tek-kW-800" firstAttribute="height" secondItem="iq1-yn-qzo" secondAttribute="height" id="vpr-pb-ghu"/>
                             <constraint firstItem="fF2-kX-QLx" firstAttribute="leading" secondItem="RRY-E0-cBu" secondAttribute="trailing" constant="8" id="wlw-oJ-ST2"/>
                             <constraint firstItem="jZt-Mz-aeS" firstAttribute="top" secondItem="9ED-01-bee" secondAttribute="bottom" constant="10" id="xJw-1a-814"/>
                             <constraint firstItem="9ED-01-bee" firstAttribute="top" secondItem="BbA-sy-ixQ" secondAttribute="bottom" constant="20" id="yRm-hT-NvR"/>
                         </constraints>
                     </view>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="250" height="300"/>
+                    <size key="freeformSize" width="250" height="350"/>
                     <connections>
                         <outlet property="opacityLabel" destination="ps6-xO-2PX" id="B4Z-mN-1nT"/>
                         <outlet property="opacitySlider" destination="Tek-kW-800" id="vzc-2H-TaZ"/>

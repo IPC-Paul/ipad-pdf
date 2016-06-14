@@ -49,7 +49,7 @@ class ViewController: UIViewController {
 		drawView.pdfBox = imageBox
 		drawView.drawSlave = drawSlave
 		
-		
+		pdfWebView.scrollView.decelerationRate = 0.99
 		
 		LoadPDFList()
 		
@@ -101,7 +101,7 @@ class ViewController: UIViewController {
 		} else {
 			
 			scrollPDF = true
-			drawView.image = UIImage()
+			ClearDrawing(self)
 			pdfControlButton.title = "Annotate PDF"
 			drawView.userInteractionEnabled = false
 			
@@ -165,6 +165,8 @@ class ViewController: UIViewController {
 	
 	@IBAction func ClearDrawing(sender: AnyObject) {
 		drawView.PageChanged( UIImage() )
+		drawSlave.layer.sublayers?.removeAll()
+		drawView.layer.sublayers?.removeAll()
 	}
 	
 	override func didReceiveMemoryWarning() {
