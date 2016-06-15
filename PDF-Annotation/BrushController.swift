@@ -16,6 +16,10 @@ class BrushController: UIViewController {
 	@IBOutlet var sizeLabel: UILabel!
 	@IBOutlet var opacityLabel: UILabel!
 	
+	@IBOutlet weak var typeSelect: UISegmentedControl!
+	@IBOutlet weak var fillSelect: UISegmentedControl!
+	
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
@@ -24,6 +28,21 @@ class BrushController: UIViewController {
 		
 		sizeLabel.text = String(brushWidth) + " px"
 		opacityLabel.text = String(Int(brushOpacity * 100)) + "%"
+		
+		if drawingLine {
+			typeSelect.selectedSegmentIndex = 0
+			fillSelect.hidden = true
+		} else {
+			typeSelect.selectedSegmentIndex = 1
+			fillSelect.hidden = false
+		}
+		
+		if filledShape {
+			fillSelect.selectedSegmentIndex = 0
+		} else {
+			fillSelect.selectedSegmentIndex = 1
+		}
+		
 		
 		self.preferredContentSize = CGSize(width: 250,height: 400)
 	}
@@ -41,4 +60,23 @@ class BrushController: UIViewController {
 	@IBAction func ColorPicked(sender: AnyObject) {
 		ChangeDefinedColor(sender.currentTitle!!)
 	}
+	
+	@IBAction func TypeSelect(sender: AnyObject) {
+		if sender.titleForSegmentAtIndex(sender.selectedSegmentIndex)! == "Line" {
+			fillSelect.hidden = true
+			drawingLine = true
+		} else {
+			fillSelect.hidden = false
+			drawingLine = false
+		}
+	}
+	
+	@IBAction func FillSelect(sender: AnyObject) {
+		if sender.titleForSegmentAtIndex(sender.selectedSegmentIndex)! == "Filled" {
+			filledShape = true
+		} else {
+			filledShape = false
+		}
+	}
+	
 }

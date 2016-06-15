@@ -17,7 +17,10 @@ var blue : CGFloat = 0.0
 var brushWidth : Int = 10
 var brushOpacity : CGFloat = 1.0
 
-var drawingLine = false
+var drawingLine : Bool = false
+var drawSquare : Bool = true
+
+var filledShape : Bool = false
 var shapeLayer : CAShapeLayer = CAShapeLayer()
 
 var erasing = false
@@ -84,20 +87,50 @@ class DrawView: UIImageView {
 		// draw path
 		CGContextStrokePath(context)
 		
-		if (!erasing) {
-			// render line into slave image
-			drawSlave?.image = UIGraphicsGetImageFromCurrentImageContext()
-			drawSlave?.alpha = drawingOpacity
-		} else {
-			// erasure happens directly on stored image
-			self.image = UIGraphicsGetImageFromCurrentImageContext()
-		}
+		EndDrawing()
+		
 		UIGraphicsEndImageContext()
 		
 	}
 	
-	func DrawShapeIn( toPoint : CGPoint) {
+	func DrawShapeIn( fromPoint : CGPoint, toPoint : CGPoint) {
 		
+		drawSlave?.image = nil
+		
+		UIGraphicsBeginImageContext( (window?.frame.size)! )
+		let context = UIGraphicsGetCurrentContext()
+		drawSlave!.image?.drawInRect(CGRect(x: 0, y: 0, width: (window?.frame.size.width)!, height: (window?.frame.size.height)!))
+		
+		let thisWidth = toPoint.x - startPoint.x
+		let thisHeight = toPoint.y - startPoint.y
+		
+		var beginPoint = startPoint
+		
+		if thisWidth < 0 && thisHeight < 0 {
+			beginPoint = toPoint
+		} else if thisHeight < 0 {
+			beginPoint.y = startPoint.y + thisHeight
+		} else if thisWidth < 0 {
+			beginPoint.x = startPoint.x + thisWidth
+		}
+		
+		if filledShape {
+			CGContextSetFillColorWithColor(context, UIColor(colorLiteralRed: Float(red), green: Float(green), blue: Float(blue), alpha: Float(brushOpacity)).CGColor)
+			CGContextAddRect(context, CGRectMake(beginPoint.x, beginPoint.y, abs(thisWidth), abs(thisHeight)))
+		} else {
+			CGContextAddRect(context, CGRectMake(beginPoint.x, beginPoint.y, abs(thisWidth), abs(thisHeight)))
+			CGContextSetLineWidth(context, CGFloat(brushWidth))
+			CGContextSetStrokeColorWithColor(context, UIColor(colorLiteralRed: Float(red), green: Float(green), blue: Float(blue), alpha: Float(brushOpacity)).CGColor)
+			CGContextStrokePath(context)
+		}
+		
+		CGContextFillPath(context)
+		
+		EndDrawing()
+		
+		UIGraphicsEndImageContext()
+		
+		/*
 		shapeLayer = CAShapeLayer()
 		
 		let thisWidth = toPoint.x - startPoint.x
@@ -118,7 +151,18 @@ class DrawView: UIImageView {
 		shapeLayer.fillColor = UIColor(colorLiteralRed: Float(red), green: Float(green), blue: Float(blue), alpha: Float(brushOpacity)).CGColor
 		
 		drawSlave?.layer.sublayers = [shapeLayer]
-		
+		*/
+	}
+	
+	func EndDrawing () {
+		if (!erasing) {
+			// render line into slave image
+			drawSlave?.image = UIGraphicsGetImageFromCurrentImageContext()
+			drawSlave?.alpha = drawingOpacity
+		} else {
+			// erasure happens directly on stored image
+			self.image = UIGraphicsGetImageFromCurrentImageContext()
+		}
 	}
 	
 	override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -135,7 +179,7 @@ class DrawView: UIImageView {
 			if drawingLine {
 				DrawLineFrom(lastPoint, toPoint: currentPoint)
 			} else {
-				DrawShapeIn(currentPoint)
+				DrawShapeIn(lastPoint, toPoint: currentPoint)
 			}
 			lastPoint = currentPoint
 		}
@@ -148,13 +192,13 @@ class DrawView: UIImageView {
 		}
 		
 		if !drawingLine {
-			layer.addSublayer(shapeLayer)
+			// EndDrawing()
 		}
 		
 		UpdateImage()
 		
 		drawSlave?.image = nil
-		drawSlave?.layer.sublayers = []
+		// drawSlave?.layer.sublayers = []
 		
 	}
 	
