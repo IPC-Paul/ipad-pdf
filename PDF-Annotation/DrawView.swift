@@ -10,22 +10,24 @@ import UIKit
 
 var drawingOpacity : CGFloat = 1.0
 
-var red : CGFloat = 0.0
-var green : CGFloat = 0.0
-var blue : CGFloat = 0.0
+var red : Float = 1.0
+var green : Float = 1.0
+var blue : Float = 0.0
+
+var currentColor : CGColor = UIColor.blackColor().CGColor
 
 var brushWidth : Int = 10
-var brushOpacity : CGFloat = 1.0
+var brushOpacity : Float = 0.75
 
 var drawingLine : Bool = false
-var drawSquare : Bool = true
+var drawingSquare : Bool = true
 
-var filledShape : Bool = false
+var filledShape : Bool = true
 var shapeLayer : CAShapeLayer = CAShapeLayer()
 
 var erasing = false
 
-let colors : [String : (CGFloat, CGFloat, CGFloat)] = [
+let colors : [String : (Float, Float, Float)] = [
 	"Black" : (0.0,0.0,0.0),
 	"Grey" : (0.5,0.5,0.5),
 	"Red" : (1.0,0.0,0.0),
@@ -56,6 +58,8 @@ class DrawView: UIImageView {
 			startPoint = (touches.first?.locationInView(self))!
 		}
 		
+		currentColor = UIColor(colorLiteralRed: red, green: green, blue: blue, alpha: brushOpacity).CGColor
+		
 		isStroke = false
 		
 		currentIteration = undoHistory.count
@@ -81,7 +85,7 @@ class DrawView: UIImageView {
 		// brush size/opacity/color
 		CGContextSetLineCap(context, .Round)
 		CGContextSetLineWidth(context, CGFloat(brushWidth))
-		CGContextSetRGBStrokeColor(context, red, green, blue, brushOpacity)
+		CGContextSetStrokeColorWithColor(context, currentColor)
 		CGContextSetBlendMode(context, .Saturation)
 		
 		// draw path
@@ -114,14 +118,39 @@ class DrawView: UIImageView {
 			beginPoint.x = startPoint.x + thisWidth
 		}
 		
-		if filledShape {
-			CGContextSetFillColorWithColor(context, UIColor(colorLiteralRed: Float(red), green: Float(green), blue: Float(blue), alpha: Float(brushOpacity)).CGColor)
-			CGContextAddRect(context, CGRectMake(beginPoint.x, beginPoint.y, abs(thisWidth), abs(thisHeight)))
+		let drawRect = CGRectMake(beginPoint.x, beginPoint.y, abs(thisWidth), abs(thisHeight))
+		
+		if drawingSquare {
+			
+			let roundedSquare = UIBezierPath(roundedRect: drawRect, byRoundingCorners: UIRectCorner.AllCorners, cornerRadii: CGSizeMake(CGFloat(brushWidth), CGFloat(brushWidth))).CGPath
+			
+			if filledShape {
+				
+				//CGContextAddPath(context, roundedSquare)
+				CGContextSetFillColorWithColor(context, currentColor)
+				CGContextAddPath(context, roundedSquare)
+				//CGContextAddRect(context, drawRect)
+			} else {
+				CGContextAddPath(context, roundedSquare)
+				//CGContextAddRect(context, drawRect)
+				CGContextSetLineWidth(context, CGFloat(brushWidth))
+				CGContextSetStrokeColorWithColor(context, currentColor)
+				CGContextStrokePath(context)
+			}
 		} else {
-			CGContextAddRect(context, CGRectMake(beginPoint.x, beginPoint.y, abs(thisWidth), abs(thisHeight)))
-			CGContextSetLineWidth(context, CGFloat(brushWidth))
-			CGContextSetStrokeColorWithColor(context, UIColor(colorLiteralRed: Float(red), green: Float(green), blue: Float(blue), alpha: Float(brushOpacity)).CGColor)
-			CGContextStrokePath(context)
+			
+			let circlePath = UIBezierPath(ovalInRect: drawRect).CGPath
+			CGContextAddPath(context, circlePath)
+			
+			if filledShape {
+				CGContextSetFillColorWithColor(context, currentColor)
+				CGContextAddEllipseInRect(context, drawRect)
+			} else {
+				CGContextSetLineWidth(context, CGFloat(brushWidth))
+				CGContextSetStrokeColorWithColor(context, currentColor)
+				CGContextStrokePath(context)
+			}
+			
 		}
 		
 		CGContextFillPath(context)
@@ -130,28 +159,6 @@ class DrawView: UIImageView {
 		
 		UIGraphicsEndImageContext()
 		
-		/*
-		shapeLayer = CAShapeLayer()
-		
-		let thisWidth = toPoint.x - startPoint.x
-		let thisHeight = toPoint.y - startPoint.y
-		
-		var beginPoint = startPoint
-		
-		if thisWidth < 0 && thisHeight < 0 {
-			beginPoint = toPoint
-		} else if thisHeight < 0 {
-			beginPoint.y = startPoint.y + thisHeight
-		} else if thisWidth < 0 {
-			beginPoint.x = startPoint.x + thisWidth
-		}
-		
-		shapeLayer.path = UIBezierPath(roundedRect: CGRect(x: beginPoint.x, y: beginPoint.y, width: abs(thisWidth), height: abs(thisHeight)), cornerRadius:  50).CGPath
-		
-		shapeLayer.fillColor = UIColor(colorLiteralRed: Float(red), green: Float(green), blue: Float(blue), alpha: Float(brushOpacity)).CGColor
-		
-		drawSlave?.layer.sublayers = [shapeLayer]
-		*/
 	}
 	
 	func EndDrawing () {
@@ -246,8 +253,8 @@ func ChangeDefinedColor(color : String) {
 
 func DefineOwnColor (newRed : Float, newGreen : Float, newBlue : Float) {
 	
-	red = CGFloat(newRed)
-	green = CGFloat(newGreen)
-	blue = CGFloat(newBlue)
+	red = newRed
+	green = newGreen
+	blue = newBlue
 	
 }

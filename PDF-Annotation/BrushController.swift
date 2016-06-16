@@ -31,10 +31,14 @@ class BrushController: UIViewController {
 		
 		if drawingLine {
 			typeSelect.selectedSegmentIndex = 0
-			fillSelect.hidden = true
+			fillSelect.enabled = false
 		} else {
-			typeSelect.selectedSegmentIndex = 1
-			fillSelect.hidden = false
+			if drawingSquare {
+				typeSelect.selectedSegmentIndex = 1
+			} else {
+				typeSelect.selectedSegmentIndex = 2
+			}
+			fillSelect.enabled = true
 		}
 		
 		if filledShape {
@@ -53,7 +57,7 @@ class BrushController: UIViewController {
 	}
 	
 	@IBAction func OpacityChange(sender: AnyObject) {
-		brushOpacity = CGFloat(opacitySlider.value)
+		brushOpacity = opacitySlider.value
 		opacityLabel.text = String(Int(brushOpacity * 100)) + "%"
 	}
 	
@@ -63,11 +67,16 @@ class BrushController: UIViewController {
 	
 	@IBAction func TypeSelect(sender: AnyObject) {
 		if sender.titleForSegmentAtIndex(sender.selectedSegmentIndex)! == "Line" {
-			fillSelect.hidden = true
+			fillSelect.enabled = false
 			drawingLine = true
 		} else {
-			fillSelect.hidden = false
+			fillSelect.enabled = true
 			drawingLine = false
+			if sender.titleForSegmentAtIndex(sender.selectedSegmentIndex)! == "Square" {
+				drawingSquare = true
+			} else {
+				drawingSquare = false
+			}
 		}
 	}
 	
