@@ -78,6 +78,10 @@ class DrawView: UIImageView {
 		let context = UIGraphicsGetCurrentContext()
 		drawSlave!.image?.drawInRect(CGRect(x: 0, y: 0, width: (window?.frame.size.width)!, height: (window?.frame.size.height)!))
 		
+		if screens.count > 1 {
+			secondScreenDrawSlave.image = drawSlave?.image
+		}
+		
 		// line building
 		CGContextMoveToPoint(context, fromPoint.x, fromPoint.y)
 		CGContextAddLineToPoint(context, toPoint.x, toPoint.y)
@@ -236,6 +240,10 @@ class DrawView: UIImageView {
 			drawSlave?.image?.drawInRect(CGRect(x: 0, y: 0, width: self.frame.size.width, height: self.frame.size.height), blendMode: .Normal, alpha: 1.0)
 			self.image = UIGraphicsGetImageFromCurrentImageContext()
 			UIGraphicsEndImageContext()
+		
+		if screens.count > 1 {
+			secondScreenDrawing.image = self.image
+		}
 		
 		}
 	

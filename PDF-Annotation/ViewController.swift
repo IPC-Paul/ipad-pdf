@@ -9,6 +9,11 @@
 import UIKit
 import CoreGraphics
 
+var screens : [UIScreen] = []
+
+var secondScreenDrawing : UIImageView = UIImageView()
+var secondScreenDrawSlave : UIImageView = UIImageView()
+
 let usingWebView = true
 
 var scrollPDF = true
@@ -22,7 +27,11 @@ var innerURL : NSURL = NSURL(fileURLWithPath: "")
 var currentDoc : String = ""
 var currentPage : Int = 0
 
+
 class ViewController: UIViewController {
+	
+	var externalWindow : UIWindow!
+	var secondScreenPDF : UIWebView = UIWebView()
 	
 	@IBOutlet weak var pdfWebView: UIWebView!
 	
@@ -45,6 +54,13 @@ class ViewController: UIViewController {
 		
 		super.viewDidLoad()
 		// Do any additional setup after loading the view, typically from a nib.
+		
+		// Initialize external screen if present
+		screens = UIScreen.screens()
+		if screens.count > 1 {
+			// second screen is available, grab the second screen
+			self.InitializeExternalScreen(screens[1])
+		}
 		
 		drawView.pdfBox = imageBox
 		drawView.drawSlave = drawSlave
@@ -111,6 +127,10 @@ class ViewController: UIViewController {
 	
 	func LoadPDFView(pdfURL : NSURL) {
 		pdfWebView.loadRequest(NSURLRequest(URL: pdfURL))
+		
+		if screens.count > 1 {
+			secondScreenPDF.loadRequest(NSURLRequest(URL: pdfURL))
+		}
 	}
 	
 	func LoadPages () {
@@ -168,6 +188,26 @@ class ViewController: UIViewController {
 		drawSlave.layer.sublayers?.removeAll()
 		drawView.layer.sublayers?.removeAll()
 	}
+	
+	func InitializeExternalScreen(externalScreen : UIScreen) {
+		
+		self.externalWindow = UIWindow(frame: externalScreen.bounds)
+		self.externalWindow.screen = externalScreen
+		
+		secondScreenPDF = UIWebView(frame: externalWindow.frame )
+		secondScreenDrawing = UIImageView(frame: externalWindow.frame)
+		secondScreenDrawSlave = UIImageView(frame: externalWindow.frame)
+		
+		self.externalWindow.addSubview(self.secondScreenPDF)
+		self.externalWindow.addSubview(secondScreenDrawing)
+		self.externalWindow.addSubview(secondScreenDrawSlave)
+		
+		self.externalWindow.rootViewController = UIViewController()
+		
+		self.externalWindow.makeKeyAndVisible()
+		
+	}
+	
 	
 	override func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()
