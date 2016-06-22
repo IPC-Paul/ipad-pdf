@@ -56,7 +56,10 @@ class ViewController: UIViewController {
 		// Do any additional setup after loading the view, typically from a nib.
 		
 		// Initialize external screen if present
+		
 		screens = UIScreen.screens()
+		//screens = []
+		
 		if screens.count > 1 {
 			// second screen is available, grab the second screen
 			self.InitializeExternalScreen(screens[1])
@@ -204,7 +207,7 @@ class ViewController: UIViewController {
 		
 		self.externalWindow.rootViewController = UIViewController()
 		
-		self.externalWindow.makeKeyAndVisible()
+		self.externalWindow.hidden = false
 		
 	}
 	

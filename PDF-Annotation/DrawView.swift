@@ -52,7 +52,6 @@ class DrawView: UIImageView {
 	var undoHistory : [Int : [(CGPoint, CGPoint)]] = [0:[(CGPoint(),CGPoint())]]
 	var currentIteration : Int = 0
 	
-	
 	override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
 		if !drawingLine {
 			startPoint = (touches.first?.locationInView(self))!
@@ -220,7 +219,6 @@ class DrawView: UIImageView {
 		self.image = newImage
 	}
 	
-	
 	func UpdateImage() {
 		
 		/*
@@ -242,14 +240,16 @@ class DrawView: UIImageView {
 			UIGraphicsEndImageContext()
 		
 		if screens.count > 1 {
+			let screenScale = self.frame.width / secondScreenDrawing.frame.width
+			
+			
+			
 			secondScreenDrawing.image = self.image
 		}
 		
 		}
 	
 	}
-	
-
 
 func ChangeDefinedColor(color : String) {
 	
